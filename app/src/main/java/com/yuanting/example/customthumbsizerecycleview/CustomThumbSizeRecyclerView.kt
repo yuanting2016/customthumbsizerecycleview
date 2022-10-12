@@ -51,7 +51,9 @@ class CustomThumbSizeRecyclerView @JvmOverloads constructor(
     override fun computeHorizontalScrollExtent(): Int {
         return thumbLength
     }
-
+    /**
+     * 计算竖直方向总的滑动区域
+     */
     override fun computeVerticalScrollRange(): Int {
         if (trackLength == -1) {
             trackLength = this.measuredHeight
@@ -59,6 +61,9 @@ class CustomThumbSizeRecyclerView @JvmOverloads constructor(
         return trackLength
     }
 
+    /**
+     * 计算当前这次竖直方向滑动的位移
+     */
     override fun computeVerticalScrollOffset(): Int {
         getHeights()
         val highestVisiblePixel = super.computeVerticalScrollOffset()
@@ -67,7 +72,14 @@ class CustomThumbSizeRecyclerView @JvmOverloads constructor(
     }
 
     private fun computeScrollOffset(highestVisiblePixel: Int): Int {
+        /**
+         * 不可见区域的列表（可以滑动的总长度）
+         */
         val invisiblePartOfRecyclerView: Int = totalLength - trackLength
+
+        /**
+         * 剩余需要滑动的长度
+         */
         val scrollAmountRemaining = invisiblePartOfRecyclerView - highestVisiblePixel
         return when {
             invisiblePartOfRecyclerView == scrollAmountRemaining -> {
@@ -82,6 +94,9 @@ class CustomThumbSizeRecyclerView @JvmOverloads constructor(
         }
     }
 
+    /**
+     * thumb的长度，当前固定为thumbLength
+     */
     override fun computeVerticalScrollExtent(): Int {
         return thumbLength
     }
